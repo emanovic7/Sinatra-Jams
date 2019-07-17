@@ -23,7 +23,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/artists/:id' do
-    @artist = Artist.find(params[:id])
+  find_artist
     erb :show
   end
 
@@ -33,13 +33,13 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/artists/:id/edit' do
-    @artist = Artist.find(params[:id])
+    find_artist
 
     erb :edit
   end
 
   put '/artists/:id' do
-    @artist = Artist.find(params[:id])
+    find_artist
     #binding.pry
     @artist.update(params[:artist])
 
@@ -47,10 +47,14 @@ class ApplicationController < Sinatra::Base
   end
 
   delete '/artists/:id' do
-    @artist = Artist.find(params[:id])
+    find_artist
     @artist.destroy
 
     redirect to '/artists'
+  end
+
+  def find_artist
+    @artist = Artist.find(params[:id])
   end
 
 
